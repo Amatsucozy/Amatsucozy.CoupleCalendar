@@ -1,0 +1,82 @@
+# ==============================================================================
+# .NET (C# / ASP.NET Core)
+# ==============================================================================
+bin/
+obj/
+TestResults/
+[Log]/
+[log]/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.swp
+*.lp
+
+# Publishing
+http3-test/
+publish/
+*.pubxml
+*.pubxml.user
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets / Configuration
+appsettings.Development.json
+# (Note: Keep appsettings.json, but ignore secrets)
+usersecrets.json
+
+# ==============================================================================
+# Angular / Node.js
+# ==============================================================================
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Angular CLI cache
+.angular/
+
+# IDE / Editors
+.editorconfig
+.idea/
+
+# Testing
+/coverage
+/reports
+chrome_debug.log
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files (Keep templates, ignore actual secrets)
+.env
+.env.local
+src/environments/environment.prod.ts
+
+# ==============================================================================
+# OS / System Files
+# ==============================================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+.amtcz/*
+.claude/*
+docs/*

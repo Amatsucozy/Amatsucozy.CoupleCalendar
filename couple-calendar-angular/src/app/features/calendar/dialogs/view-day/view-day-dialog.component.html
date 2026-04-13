@@ -1,0 +1,39 @@
+<div class="modal">
+  <div class="modal-date">
+    <span>♡</span> {{ formatDateKey(dateKey) }}
+  </div>
+  <button
+    type="button"
+    (click)="closed.emit()"
+    class="close-btn"
+    aria-label="Close"
+  >✕</button>
+
+  @if (events().length === 0) {
+    <p class="no-events">No plans yet ✨</p>
+  }
+
+  @for (event of events(); track event.id) {
+    <div class="event-card" [ngClass]="event.period">
+      <div class="event-card-info">
+        <div class="event-card-period">{{ getPeriodLabel(event.period) }}</div>
+        <div class="event-card-title">{{ getActivityLabel(event.activityId) }}</div>
+        @if (event.note) {
+          <div class="event-card-note">{{ event.note }}</div>
+        }
+      </div>
+      <button
+        type="button"
+        (click)="deleteEvent(event.id)"
+        aria-label="Delete event"
+        class="event-del"
+      >✕</button>
+    </div>
+  }
+
+  <button
+    type="button"
+    (click)="addMore.emit()"
+    class="add-more-btn"
+  >+ Add another plan</button>
+</div>

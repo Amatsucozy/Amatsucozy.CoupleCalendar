@@ -1,0 +1,18 @@
+<div
+  class="cell-card"
+  [class.today]="day.isToday"
+  [class.cursor-pointer]="day.dateKey !== null"
+  [class.empty]="!day.isCurrentMonth"
+  (click)="onClick()"
+>
+  @if (day.dayNumber !== null) {
+    <span class="day-num">{{ day.dayNumber }}</span>
+  }
+  <div class="period-slots">
+    @for (event of day.events; track event.id) {
+      <span class="slot-tag" [ngClass]="event.period">
+        {{ getActivity(event.activityId)?.emoji }} {{ getActivity(event.activityId)?.label }}
+      </span>
+    }
+  </div>
+</div>

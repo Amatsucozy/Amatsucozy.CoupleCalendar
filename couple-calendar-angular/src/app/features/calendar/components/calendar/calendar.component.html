@@ -1,0 +1,49 @@
+<header>
+  <h1>Our <em>Together</em> Calendar ♡</h1>
+  <p class="subtitle">Plan your moments, big & small</p>
+</header>
+
+<app-period-legend></app-period-legend>
+
+<div class="nav">
+  <button type="button" (click)="prevMonth()" aria-label="Previous month">‹</button>
+  <div class="month-label">{{ getMonthName() }} {{ viewYear() }}</div>
+  <button type="button" (click)="nextMonth()" aria-label="Next month">›</button>
+</div>
+
+<div class="calendar-wrap">
+  <div class="weekday-row">
+    <span class="weekday">Sun</span>
+    <span class="weekday">Mon</span>
+    <span class="weekday">Tue</span>
+    <span class="weekday">Wed</span>
+    <span class="weekday">Thu</span>
+    <span class="weekday">Fri</span>
+    <span class="weekday">Sat</span>
+  </div>
+
+  <div class="grid grid-cols-7 gap-1">
+    @for (day of calendarDays(); track day.dateKey ?? $index) {
+      <app-day-cell [day]="day" (cellClick)="onCellClick($event)"></app-day-cell>
+    }
+  </div>
+</div>
+
+@if (dialogService.dialogState(); as state) {
+  <div class="overlay-backdrop" (click)="dialogService.close()">
+    <div (click)="$event.stopPropagation()">
+      @if (state.type === 'add-event') {
+        <app-add-event-dialog
+          [dateKey]="state.dateKey"
+          (saved)="onEventSaved()"
+          (cancelled)="dialogService.close()" />
+      }
+      @if (state.type === 'view-day') {
+        <app-view-day-dialog
+          [dateKey]="state.dateKey"
+          (addMore)="dialogService.open('add-event', state.dateKey)"
+          (closed)="dialogService.close()" />
+      }
+    </div>
+  </div>
+}

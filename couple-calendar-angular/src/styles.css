@@ -1,0 +1,98 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* Tailwind v4 — processed by @tailwindcss/postcss after Sass compilation */
+@import "tailwindcss";
+
+/* Design tokens */
+@theme {
+  --color-blush:       #f2c4ce;
+  --color-rose:        #e8849a;
+  --color-deep:        #c45c78;
+  --color-cream:       #fdf6f0;
+  --color-warm:        #f9ede4;
+  --color-ink:         #2d1f28;
+  --color-soft:        #8a6570;
+  --color-morning:     #fde8a0;
+  --color-morning-d:   #e8b84b;
+  --color-lunch:       #b8e4c8;
+  --color-lunch-d:     #4aab72;
+  --color-afterwork:   #b8d4f0;
+  --color-afterwork-d: #4a82c8;
+  --color-evening:     #d4b8f0;
+  --color-evening-d:   #7a4ab8;
+  --font-display:      'Playfair Display', serif;
+  --font-body:         'DM Sans', sans-serif;
+}
+
+/* Global styles */
+html {
+  zoom: 1.5;
+}
+
+html, body {
+  margin: 0;
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse at 10% 20%, rgba(242,196,206,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(212,184,240,0.25) 0%, transparent 50%);
+}
+
+/* Shared modal styles — used by AddEvent and ViewDay dialogs */
+.modal {
+  background: var(--color-cream);
+  border-radius: 20px;
+  padding: 1.75rem;
+  width: 420px;
+  box-shadow: 0 20px 60px rgba(45,31,40,0.2);
+  animation: slideUp 0.25s ease;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-date {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--color-deep);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-date span {
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-warm);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  font-size: 1rem;
+  color: var(--color-soft);
+}
+
+.close-btn:hover {
+  background: var(--color-blush);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}

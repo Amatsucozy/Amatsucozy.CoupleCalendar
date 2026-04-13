@@ -1,0 +1,64 @@
+<div class="modal">
+  <div class="modal-date">
+    <span>♡</span> {{ formatDateKey(dateKey) }}
+  </div>
+  <button
+    type="button"
+    (click)="cancelled.emit()"
+    class="close-btn"
+    aria-label="Close"
+  >✕</button>
+
+  <form [formGroup]="form">
+    <p class="field-label">Time of day</p>
+    <div class="grid grid-cols-2 gap-2 mb-4">
+      @for (period of periods; track period.id) {
+        <button
+          type="button"
+          [class.selected]="form.get('period')?.value === period.id"
+          (click)="form.get('period')?.setValue(period.id)"
+          class="period-btn period-btn--{{ period.id }}"
+        >
+          {{ period.emoji }} {{ period.label }}
+        </button>
+      }
+    </div>
+
+    <p class="field-label">Activity</p>
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      @for (activity of activities; track activity.id) {
+        <button
+          type="button"
+          [class.selected]="form.get('activityId')?.value === activity.id"
+          (click)="form.get('activityId')?.setValue(activity.id)"
+          class="activity-btn"
+        >
+          <span class="emoji">{{ activity.emoji }}</span>
+          <span>{{ activity.label }}</span>
+        </button>
+      }
+    </div>
+
+    <p class="field-label">Note (optional)</p>
+    <textarea
+      formControlName="note"
+      rows="2"
+      placeholder="Add a little note…"
+      class="note-input"
+    ></textarea>
+
+    <div class="modal-actions">
+      <button
+        type="button"
+        (click)="cancelled.emit()"
+        class="btn-cancel"
+      >Cancel</button>
+      <button
+        type="button"
+        (click)="save()"
+        [disabled]="form.invalid"
+        class="btn-save"
+      >Save ♡</button>
+    </div>
+  </form>
+</div>
