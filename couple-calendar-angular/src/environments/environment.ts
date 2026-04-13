@@ -1,0 +1,8 @@
+export const environment = {
+  production: false,
+  useMockApi: false,
+  auth0Domain: 'amagumo-dev.jp.auth0.com',
+  auth0ClientId: 'GPwqvAMG9QGCYQu1P7IZ9Dz81HNZZUjE',
+  auth0Audience: 'couple-calendar-api',
+  apiBaseUrl: 'https://localhost:7132'
+};

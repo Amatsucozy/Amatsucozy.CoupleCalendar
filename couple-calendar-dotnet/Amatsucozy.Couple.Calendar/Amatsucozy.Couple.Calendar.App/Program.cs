@@ -1,20 +1,41 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Amatsucozy.Couple.Calendar.App.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
-// Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+    .AddJwtBearer(options =>
+    {
+        options.Authority = $"https://{config["Auth0:Domain"]}/";
+        options.Audience = config["Auth0:Audience"];
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
+    });
+
+builder.Services.AddCors(o => o.AddPolicy("AngularDev", p =>
+    p.WithOrigins("http://localhost:4200")
+     .AllowAnyHeader()
+     .AllowAnyMethod()));
+
+builder.Services.AddSingleton<IEventRepository, MongoEventRepository>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ReadEvents",   p => p.RequireClaim("permissions", "read:events"));
+    options.AddPolicy("WriteEvents",  p => p.RequireClaim("permissions", "write:events"));
+    options.AddPolicy("DeleteEvents", p => p.RequireClaim("permissions", "delete:events"));
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -22,6 +43,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AngularDev");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

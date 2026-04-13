@@ -1,6 +1,8 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { EventService } from './services/event.service';
 import { MockEventService } from './services/mock-event.service';
+import { HttpEventService } from './services/http-event.service';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [],
@@ -16,7 +18,7 @@ export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
-      providers: [{ provide: EventService, useClass: MockEventService }],
+      providers: [{ provide: EventService, useClass: environment.useMockApi ? MockEventService : HttpEventService }],
     };
   }
 }
