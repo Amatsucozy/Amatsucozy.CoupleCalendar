@@ -5,6 +5,7 @@ using Amatsucozy.Couple.Calendar.App.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
+var corsAllowedOrigins = config.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -17,10 +18,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(o => o.AddPolicy("AngularDev", p =>
-    p.WithOrigins("http://localhost:4200")
-     .AllowAnyHeader()
-     .AllowAnyMethod()));
+builder.Services.AddCors(o => o.AddPolicy("Default", p =>
+{
+    if (corsAllowedOrigins.Length > 0)
+    {
+        p.WithOrigins(corsAllowedOrigins)
+         .AllowAnyHeader()
+         .AllowAnyMethod();
+    }
+}));
 
 builder.Services.AddSingleton<IEventRepository, MongoEventRepository>();
 
@@ -43,7 +49,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AngularDev");
+app.UseCors("Default");
 app.UseAuthentication();
 app.UseAuthorization();
 
