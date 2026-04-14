@@ -1,0 +1,14 @@
+# Stage 1: Build (Use SDK)
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
+WORKDIR /src
+COPY ["Amatsucozy.Couple.Calendar.App.csproj", "./"]
+RUN dotnet restore "Amatsucozy.Couple.Calendar.App.csproj"
+COPY . .
+# Combine build and publish into one step to save time
+RUN dotnet publish "Amatsucozy.Couple.Calendar.App.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# Stage 2: Final (Use Runtime only - MUCH smaller)
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "Amatsucozy.Couple.Calendar.App.dll"]
