@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "couple-calendar-angular/dist",
+    "public": "couple-calendar-angular/dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
