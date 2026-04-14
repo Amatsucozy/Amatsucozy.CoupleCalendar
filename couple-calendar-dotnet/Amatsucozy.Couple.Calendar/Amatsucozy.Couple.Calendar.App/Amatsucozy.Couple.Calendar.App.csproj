@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-Amatsucozy.Couple.Calendar.App-754bc719-2906-48d8-b937-faa307a72720</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +15,6 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.4" />
         <PackageReference Include="Microsoft.Identity.Web" Version="3.14.1" />
         <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="3.14.1" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
         <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
     </ItemGroup>
 
